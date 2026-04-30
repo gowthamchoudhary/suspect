@@ -8,7 +8,8 @@ export default function LoadingScreen({ message, progress }) {
         <img
           className="lscreen-logo"
           src="/detective/logo_detective.png"
-          alt="SUSPECT"
+          alt=""
+          aria-hidden="true"
         />
         <h1 className="lscreen-title">SUSPECT</h1>
         <p className="lscreen-msg">{message}</p>

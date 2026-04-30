@@ -70,24 +70,23 @@
 
 .intro-logo {
   display: block;
-  width: clamp(160px, 34vw, 300px);
+  width: clamp(120px, 24vw, 210px);
   height: auto;
-  margin: 0 auto;
+  margin: 0 auto 8px;
   object-fit: contain;
   filter: drop-shadow(0 0 18px rgba(139, 0, 0, 0.38));
   animation: titleGlitch 8s infinite;
 }
 
 .intro-title {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(64px, 14vw, 124px);
+  color: #fff;
+  letter-spacing: 0.15em;
+  line-height: 0.9;
+  margin: 0;
+  position: relative;
+  animation: titleGlitch 8s infinite;
 }
 
 @keyframes titleGlitch {

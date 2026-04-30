@@ -31,7 +31,8 @@ export default function IntroScreen({ onStart }) {
           <img
             className="intro-logo"
             src="/detective/logo_detective.png"
-            alt="SUSPECT"
+            alt=""
+            aria-hidden="true"
           />
           <h1 className="intro-title">SUSPECT</h1>
           <div className="intro-title-line" />
