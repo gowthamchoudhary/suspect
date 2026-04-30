@@ -1,5 +1,5 @@
 import process from 'node:process';
-import { proxyRequest } from '../_proxy.js';
+import { proxyRequest } from './_proxy.js';
 
 export default async function handler(req, res) {
   const apiKey = process.env.GROQ_API_KEY;
@@ -8,13 +8,14 @@ export default async function handler(req, res) {
     return;
   }
 
-  const parts = Array.isArray(req.query.path) ? req.query.path : [req.query.path].filter(Boolean);
-  const search = req.url.includes('?') ? `?${req.url.split('?')[1]}` : '';
+  const url = new URL(req.url, `https://${req.headers.host || 'localhost'}`);
+  const path = url.searchParams.get('path') || '';
+  url.searchParams.delete('path');
 
   try {
     await proxyRequest(req, res, {
       baseUrl: 'https://api.groq.com',
-      path: `/${parts.join('/')}${search}`,
+      path: `/${path}${url.search}`,
       headers: { Authorization: `Bearer ${apiKey}` },
     });
   } catch (error) {

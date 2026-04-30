@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/api/groq/:path*",
+      "destination": "/api/groq?path=:path*"
+    },
+    {
+      "source": "/api/eleven/:path*",
+      "destination": "/api/eleven?path=:path*"
+    }
+  ]
+}
