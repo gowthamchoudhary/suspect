@@ -1,0 +1,174 @@
+.vsetup {
+  position: fixed;
+  inset: 0;
+  background: #060606;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+}
+
+.vsetup-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.vsetup-content {
+  position: relative;
+  text-align: center;
+  max-width: 480px;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.vsetup-icon { margin-bottom: 8px; }
+
+.vsetup-mic {
+  width: 64px;
+  height: 64px;
+  border: 1px solid #222;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  margin: 0 auto;
+  transition: all 0.3s;
+}
+
+.vsetup-mic svg { width: 28px; height: 28px; }
+
+.vsetup-mic.recording {
+  border-color: #8B0000;
+  color: #8B0000;
+  animation: micPulse 1s ease-in-out infinite;
+}
+
+@keyframes micPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139,0,0,0.3); }
+  50% { box-shadow: 0 0 0 12px rgba(139,0,0,0); }
+}
+
+.vsetup-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.25em;
+  color: #ccc;
+  margin: 0;
+}
+
+.vsetup-sub {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #444;
+  margin: 0;
+}
+
+.vsetup-instruction {
+  font-size: 11px;
+  color: #444;
+  line-height: 1.8;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.vsetup-prompt {
+  display: block;
+  margin-top: 12px;
+  color: #888;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  border-left: 2px solid #8B0000;
+  padding-left: 12px;
+  text-align: left;
+}
+
+.vsetup-error { font-size: 10px; color: #8B0000; letter-spacing: 0.1em; margin: 0; }
+
+.vsetup-btns { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 8px; }
+
+.vsetup-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  padding: 10px 24px;
+}
+
+.vsetup-btn.primary {
+  background: transparent;
+  border: 1px solid #8B0000;
+  color: #8B0000;
+}
+
+.vsetup-btn.primary:hover { background: #8B0000; color: #000; }
+
+.vsetup-btn.ghost {
+  background: transparent;
+  border: none;
+  color: #2a2a2a;
+  text-decoration: underline;
+  text-decoration-color: #1a1a1a;
+  padding: 4px 0;
+}
+
+.vsetup-btn.ghost:hover { color: #444; }
+
+.vsetup-rec-bars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 40px;
+  margin: 8px 0;
+}
+
+.vsetup-bar {
+  width: 3px;
+  background: #8B0000;
+  border-radius: 2px;
+  animation: recBar 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes recBar {
+  from { height: 4px; opacity: 0.4; }
+  to { height: 36px; opacity: 1; }
+}
+
+.vsetup-rec-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #8B0000;
+  animation: recBlink 0.8s step-end infinite;
+}
+
+@keyframes recBlink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.vsetup-processing, .vsetup-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.vsetup-spinner {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #1a1a1a;
+  border-top-color: #8B0000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.vsetup-status { font-size: 12px; letter-spacing: 0.2em; color: #555; margin: 0; }
+.vsetup-status.done { color: #4a8a4a; }
+.vsetup-status-sub { font-size: 9px; letter-spacing: 0.2em; color: #2a2a2a; margin: 0; }

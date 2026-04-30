@@ -1,0 +1,68 @@
+.lscreen {
+  position: fixed;
+  inset: 0;
+  background: #060606;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+}
+
+.lscreen-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.lscreen-content {
+  position: relative;
+  text-align: center;
+  width: 320px;
+}
+
+.lscreen-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px;
+  letter-spacing: 0.3em;
+  color: #fff;
+  margin: 0 0 28px;
+  animation: lBreath 3s ease-in-out infinite;
+}
+
+@keyframes lBreath { 0%,100%{opacity:0.7} 50%{opacity:1} }
+
+.lscreen-msg {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #444;
+  margin-bottom: 20px;
+  min-height: 16px;
+}
+
+.lscreen-bar {
+  width: 100%;
+  height: 1px;
+  background: #111;
+  margin-bottom: 8px;
+}
+
+.lscreen-fill {
+  height: 100%;
+  background: #8B0000;
+  transition: width 0.5s ease;
+}
+
+.lscreen-pct {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+.lscreen-sub {
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  color: #1a1a1a;
+  font-style: italic;
+}
