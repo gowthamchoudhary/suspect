@@ -28,6 +28,11 @@ export default function IntroScreen({ onStart }) {
 
       <div className="intro-center">
         <div className="intro-title-wrap">
+          <img
+            className="intro-logo"
+            src="/detective/logo_detective.png"
+            alt="SUSPECT"
+          />
           <h1 className="intro-title">SUSPECT</h1>
           <div className="intro-title-line" />
         </div>

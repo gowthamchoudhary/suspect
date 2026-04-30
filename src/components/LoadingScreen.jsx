@@ -5,6 +5,11 @@ export default function LoadingScreen({ message, progress }) {
     <div className="lscreen">
       <div className="lscreen-noise" />
       <div className="lscreen-content">
+        <img
+          className="lscreen-logo"
+          src="/detective/logo_detective.png"
+          alt="SUSPECT"
+        />
         <h1 className="lscreen-title">SUSPECT</h1>
         <p className="lscreen-msg">{message}</p>
         <div className="lscreen-bar">

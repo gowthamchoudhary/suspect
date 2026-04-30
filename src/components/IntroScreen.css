@@ -68,15 +68,26 @@
   margin-bottom: 8px;
 }
 
-.intro-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(72px, 16vw, 140px);
-  color: #fff;
-  letter-spacing: 0.15em;
-  line-height: 1;
-  margin: 0;
-  position: relative;
+.intro-logo {
+  display: block;
+  width: clamp(160px, 34vw, 300px);
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 18px rgba(139, 0, 0, 0.38));
   animation: titleGlitch 8s infinite;
+}
+
+.intro-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 @keyframes titleGlitch {
