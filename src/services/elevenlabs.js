@@ -1,11 +1,9 @@
 const BASE = '/api/eleven';
-const key = () => import.meta.env.VITE_ELEVENLABS_API_KEY;
 
 // Hardcoded detective voices — no generation needed
 export const DETECTIVE_VOICE_ID = 'SHiZvifpX6NOyojATxRy'; // Garrison - Rugged and Stoic
 
 const jsonHeaders = () => ({
-  'xi-api-key': key(),
   'Content-Type': 'application/json',
 });
 
@@ -61,7 +59,6 @@ export async function cloneSuspectVoice(audioBlob, name) {
 
   const res = await fetch(`${BASE}/v1/voices/add`, {
     method: 'POST',
-    headers: { 'xi-api-key': key() },
     body: form,
   });
   if (!res.ok) throw new Error(`clone ${res.status}: ${await res.text()}`);
@@ -77,7 +74,6 @@ export async function transcribeAnswer(audioBlob) {
 
   const res = await fetch(`${BASE}/v1/speech-to-text`, {
     method: 'POST',
-    headers: { 'xi-api-key': key() },
     body: form,
   });
   if (!res.ok) throw new Error(`STT ${res.status}`);

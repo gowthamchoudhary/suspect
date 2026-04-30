@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { detectiveTTS, evidenceTTS, transcribeAnswer, cloneSuspectVoice, generateSFX, playAudio, stopAudio } from '../services/elevenlabs';
-import { getDetectiveMove, getRetryMove, getHint } from '../services/groq';
+import { getDetectiveMove, getRetryMove } from '../services/groq';
 import { useRecorder } from '../hooks/useRecorder';
 import CaseFile from './CaseFile';
 import Waveform from './Waveform';
@@ -307,9 +307,9 @@ export default function InterrogationRoom({ scenario, playerName, onEnd }) {
       return;
     }
     try {
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const res = await fetch('/api/groq/openai/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`, 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           messages: [{ role: 'user', content: `You are a tactical advisor for a suspect in police interrogation. Case: ${scenario.title} — ${scenario.context}. Current question: "${currentQuestion}". Prior answers: ${conversationHistory.map((h,i)=>`Q${i+1}: ${h.answer}`).join(', ')}. Write ONE specific tactical hint (max 15 words) telling the suspect exactly what to say or avoid. Return JSON: { "hint": "..." }` }],

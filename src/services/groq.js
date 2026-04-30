@@ -1,5 +1,4 @@
-const GROQ_BASE = 'https://api.groq.com/openai/v1';
-const key = () => import.meta.env.VITE_GROQ_API_KEY;
+const GROQ_BASE = '/api/groq/openai/v1';
 
 export const CASE_ARCHETYPES = {
   alibi: {
@@ -141,7 +140,7 @@ export async function getDetectiveMove(archetype, playerName, conversationHistor
 
   const res = await fetch(`${GROQ_BASE}/chat/completions`, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${key()}`, 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
       messages: [
@@ -166,7 +165,7 @@ export async function getRetryMove(archetype, playerName, conversationHistory, l
   const systemPrompt = buildRetryPrompt(archetype, playerName, conversationHistory, lastQuestion, weakAnswer, retryCount);
   const res = await fetch(`${GROQ_BASE}/chat/completions`, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${key()}`, 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
       messages: [{ role: 'user', content: systemPrompt }],
@@ -186,7 +185,7 @@ export async function getHint(archetype, playerName, conversationHistory, curren
   const prompt = buildHintPrompt(archetype, playerName, conversationHistory, currentQuestion);
   const res = await fetch(`${GROQ_BASE}/chat/completions`, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${key()}`, 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
       messages: [{ role: 'user', content: prompt }],
@@ -209,7 +208,7 @@ export async function generateVerdict(archetype, playerName, conversationHistory
 
   const res = await fetch(`${GROQ_BASE}/chat/completions`, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${key()}`, 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
       messages: [
