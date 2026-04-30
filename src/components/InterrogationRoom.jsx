@@ -85,7 +85,7 @@ export default function InterrogationRoom({ scenario, playerName, onEnd }) {
   const hasIntro = useRef(false);
   const timerRef = useRef(null);
   const timerExpiredRef = useRef(false);
-  const { isRecording, startRecording, stopRecording } = useRecorder();
+  const { isRecording, recordingError, startRecording, stopRecording } = useRecorder();
 
   useEffect(() => {
     const poses = ['neutral', 'lean', 'aggressive', 'slam', 'thinking', 'smirk'];
@@ -329,8 +329,13 @@ export default function InterrogationRoom({ scenario, playerName, onEnd }) {
 
   const handleStartAnswer = async () => {
     if (phase !== 'listening') return;
+    const ok = await startRecording();
+    if (!ok) {
+      setDisplayText('I cannot hear you. Check microphone permission and try again.');
+      setPhase('listening');
+      return;
+    }
     setPhase('speaking');
-    await startRecording();
   };
 
   const handleStopAnswer = useCallback(async () => {
@@ -346,8 +351,11 @@ export default function InterrogationRoom({ scenario, playerName, onEnd }) {
     }
 
     let transcript = '...';
-    if (blob) {
-      try { transcript = await transcribeAnswer(blob) || '...'; } catch {}
+    if (blob && blob.size > 500) {
+      try { transcript = await transcribeAnswer(blob) || '...'; }
+      catch (error) {
+        console.warn('Transcription failed:', error);
+      }
     }
     setTranscribing(false);
 
@@ -469,6 +477,17 @@ export default function InterrogationRoom({ scenario, playerName, onEnd }) {
     await detectiveSpeak(move.nextQuestion, DETECTIVE_POSE[newPressure]);
     setPhase('stance_select');
   }, [phase, stopTimer, stopRecording, recordingBlobs, retryCount, voiceCloned, conversationHistory, currentQuestion, hintUsed, selectedStance, questionIndex, pressureLevel, sfxLoaded, scenario, playerName, detectiveSpeak, playEvidence, attemptSilentClone, onEnd]);
+
+  useEffect(() => {
+    if (!isRecording) return;
+    const stopOnRelease = () => handleStopAnswer();
+    window.addEventListener('pointerup', stopOnRelease, { once: true });
+    window.addEventListener('pointercancel', stopOnRelease, { once: true });
+    return () => {
+      window.removeEventListener('pointerup', stopOnRelease);
+      window.removeEventListener('pointercancel', stopOnRelease);
+    };
+  }, [isRecording, handleStopAnswer]);
 
   // Auto-submit when timer expires
   useEffect(() => {
@@ -619,17 +638,18 @@ export default function InterrogationRoom({ scenario, playerName, onEnd }) {
             <div className="selected-stance-tag">Angle: {selectedStance}</div>
           )}
           {canSpeak && !isRecording && (
-            <button className="speak-btn" onMouseDown={handleStartAnswer} onTouchStart={handleStartAnswer}>
+            <button className="speak-btn" onPointerDown={handleStartAnswer}>
               <div className="speak-btn-dot" />
               HOLD TO SPEAK
             </button>
           )}
           {isRecording && (
-            <button className="speak-btn recording" onMouseUp={handleStopAnswer} onTouchEnd={handleStopAnswer}>
+            <button className="speak-btn recording">
               <div className="speak-btn-dot recording" />
               RELEASE TO SUBMIT
             </button>
           )}
+          {recordingError && <div className="selected-stance-tag">{recordingError}</div>}
           {isBusy && (
             <div className="speak-waiting">
               <div className="waiting-dots"><span>●</span><span>●</span><span>●</span></div>

@@ -69,14 +69,18 @@ export async function cloneSuspectVoice(audioBlob, name) {
 // STT — transcribe player's spoken answer, return blob + transcript
 export async function transcribeAnswer(audioBlob) {
   const form = new FormData();
-  form.append('file', audioBlob, 'answer.webm');
+  const ext = audioBlob.type.includes('mp4') ? 'm4a'
+    : audioBlob.type.includes('aac') ? 'aac'
+    : audioBlob.type.includes('ogg') ? 'ogg'
+    : 'webm';
+  form.append('file', audioBlob, `answer.${ext}`);
   form.append('model_id', 'scribe_v1');
 
   const res = await fetch(`${BASE}/v1/speech-to-text`, {
     method: 'POST',
     body: form,
   });
-  if (!res.ok) throw new Error(`STT ${res.status}`);
+  if (!res.ok) throw new Error(`STT ${res.status}: ${await res.text()}`);
   const data = await res.json();
   return data.text || '';
 }
